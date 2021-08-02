@@ -2,6 +2,13 @@
 
 using namespace std;
 
+/*
+ *
+ * Input: cost matrix (0 means that there is no edge between two nodes)
+ * Output: shortest paths matrix (0 means that there is no edge between two nodes)
+ *
+ */
+
 class Graph {
 
     vector < vector <int> > costMatrix;
