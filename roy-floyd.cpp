@@ -22,14 +22,12 @@ public:
 
         ifstream fin(Filename);
 
-        int nodes;
-        fin >> nodes;
+        fin >> this->V;
 
-        this->V = nodes;
-        this->costMatrix.resize(nodes, vector <int>(nodes) );
+        this->costMatrix.resize(this->V, vector <int>(this->V) );
 
-        for(int i = 0; i < nodes; ++i)
-            for(int j = 0; j < nodes; ++j) {
+        for(int i = 0; i < this->V; ++i)
+            for(int j = 0; j < this->V; ++j) {
                 fin >> this->costMatrix[i][j];
 
                 if(this->costMatrix[i][j] == 0) // in case there is no edge from i to j

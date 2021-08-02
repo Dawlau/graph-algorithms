@@ -15,17 +15,13 @@ public:
 
         ifstream fin(Filename);
 
-        int nodes, edges;
-        fin >> nodes >> edges;
+        fin >> this->V >> this->E;
 
-        this->V = nodes;
-        this->E = edges;
+        this->adjList.resize(this->V);
+        this->seen.resize(this->V);
+        this->topoSort.reserve(this->V);
 
-        this->adjList.resize(nodes);
-        this->seen.resize(nodes);
-        this->topoSort.reserve(nodes);
-
-        for(; edges; --edges){
+        for(int e = 0; e < this->E; ++e){
 
             int from, to;
             fin >> from >> to;
