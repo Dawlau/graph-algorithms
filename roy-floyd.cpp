@@ -18,7 +18,25 @@ public:
 
     static const int Inf = INT_MAX;
 
-    friend ifstream& operator >> (ifstream &in, Graph &graph);
+    explicit Graph(const char *Filename) {
+
+        ifstream fin(Filename);
+
+        int nodes;
+        fin >> nodes;
+
+        this->V = nodes;
+        this->costMatrix.resize(nodes, vector <int>(nodes) );
+
+        for(int i = 0; i < nodes; ++i)
+            for(int j = 0; j < nodes; ++j) {
+                fin >> this->costMatrix[i][j];
+
+                if(this->costMatrix[i][j] == 0) // in case there is no edge from i to j
+                    this->costMatrix[i][j] = Graph::Inf;
+            }
+    }
+
 
     vector < vector <int> > Roy_Floyd() {
 
@@ -33,25 +51,6 @@ public:
         return this->costMatrix;
     }
 };
-
-ifstream &operator>>(ifstream &in, Graph &graph) {
-
-    int n;
-    in >> n;
-
-    graph.V = n;
-    graph.costMatrix.resize(n, vector <int>(n) );
-
-    for(int i = 0; i < n; ++i)
-        for(int j = 0; j < n; ++j) {
-            in >> graph.costMatrix[i][j];
-
-            if(graph.costMatrix[i][j] == 0) // in case there is no edge from i to j
-                graph.costMatrix[i][j] = Graph::Inf;
-        }
-
-    return in;
-}
 
 ofstream &operator<<(ofstream &out, const vector < vector <int> > &ans) {
 
@@ -72,11 +71,8 @@ ofstream &operator<<(ofstream &out, const vector < vector <int> > &ans) {
 
 int main(){
 
-    ifstream fin("royfloyd.in");
+    Graph graph("royfloyd.in");
+
     ofstream fout("royfloyd.out");
-
-    Graph graph;
-    fin >> graph;
-
     fout << graph.Roy_Floyd() << '\n';
 }
